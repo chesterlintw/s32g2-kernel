@@ -168,6 +168,37 @@
 			};
 		};
 
+		gmac0: ethernet@4033c000 {
+			compatible = "fsl,s32cc-dwmac";
+			reg = <0x4033c000 0x2000>, /* gmac IP */
+			      <0x4007c004 0x4>;    /* S32 CTRL_STS reg */
+			interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "macirq";
+			tx-fifo-depth = <20480>;
+			rx-fifo-depth = <20480>;
+			clocks = <&scmi_clks S32G2_SCMI_CLK_GMAC0_AXI>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_AXI>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_TX_SGMII>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_TX_RGMII>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_TX_RMII>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_TX_MII>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_RX_SGMII>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_RX_RGMII>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_RX_RMII>,
+				 <&scmi_clks S32G2_SCMI_CLK_GMAC0_RX_MII>;
+			clock-names = "stmmaceth", "pclk", "tx_sgmii",
+				      "tx_rgmii", "tx_rmii", "tx_mii",
+				      "rx_sgmii", "rx_rgmii", "rx_rmii",
+				      "rx_mii";
+			status = "disabled";
+
+			gmac0_mdio: mdio {
+				compatible = "snps,dwmac-mdio";
+				#address-cells = <1>;
+				#size-cells = <0>;
+			};
+		};
+
 		gic: interrupt-controller@50800000 {
 			compatible = "arm,gic-v3";
 			reg = <0x50800000 0x10000>,

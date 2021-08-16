@@ -42,3 +42,53 @@
 &usdhc0 {
 	status = "okay";
 };
+
+&pinctrl0 {
+	pinctrl0_gmac0_mdio_a: gmac0mdioagrp {
+		fsl,pins = <
+			S32G2_PD12_GMAC0_MDC
+			S32G2_PD13_GMAC0_MDIO_OUT
+			S32G2_PD13_GMAC0_MDIO_IN
+		>;
+	};
+
+	pinctrl0_gmac0_rgmii_a: gmac0rgmiiagrp {
+		fsl,pins = <
+			S32G2_PE2_GMAC0_TXCLK_OUT
+			S32G2_PE2_GMAC0_TXCLK_IN
+			S32G2_PE3_GMAC0_TXEN_OUT
+			S32G2_PE4_GMAC0_TXD0_OUT
+			S32G2_PE5_GMAC0_TXD1_OUT
+			S32G2_PE6_GMAC0_TXD2_OUT
+			S32G2_PE7_GMAC0_TXD3_OUT
+			S32G2_PE8_GMAC0_RXCLK_OUT
+			S32G2_PE8_GMAC0_RXCLK_IN
+			S32G2_PE9_GMAC0_RXDV_OUT
+			S32G2_PE9_GMAC0_RXDV_IN
+			S32G2_PE10_GMAC0_RXD0_OUT
+			S32G2_PE10_GMAC0_RXD0_IN
+			S32G2_PE11_GMAC0_RXD1_OUT
+			S32G2_PE11_GMAC0_RXD1_IN
+			S32G2_PE12_GMAC0_RXD2_OUT
+			S32G2_PE12_GMAC0_RXD2_IN
+			S32G2_PE13_GMAC0_RXD3_OUT
+			S32G2_PE13_GMAC0_RXD3_IN
+		>;
+	};
+};
+
+&gmac0_mdio {
+	/* KSZ9031 GMAC */
+	gmac0_mdio_a_phy1: phy@1 {
+		reg = <1>;
+	};
+};
+
+&gmac0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl0_gmac0_mdio_a>, <&pinctrl0_gmac0_rgmii_a>;
+	phy-mode = "rgmii-id";
+	status = "okay";
+	/* Connected to KSZ9031 MDIO_A */
+	phy-handle = <&gmac0_mdio_a_phy1>;
+};

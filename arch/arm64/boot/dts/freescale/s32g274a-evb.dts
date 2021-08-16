@@ -36,3 +36,52 @@
 &usdhc0 {
 	status = "okay";
 };
+
+&pinctrl0 {
+	pinctrl0_gmac0_mdio_c: gmac0mdiocgrp {
+		fsl,pins = <
+			S32G2_PD12_GMAC0_MDC
+			S32G2_PD13_GMAC0_MDIO_OUT
+			S32G2_PD13_GMAC0_MDIO_IN
+		>;
+	};
+
+	pinctrl0_gmac0_rgmii_c: gmac0rgmiicgrp {
+		fsl,pins = <
+			S32G2_PE2_GMAC0_TXCLK_OUT
+			S32G2_PE2_GMAC0_TXCLK_IN
+			S32G2_PE3_GMAC0_TXEN_OUT
+			S32G2_PE4_GMAC0_TXD0_OUT
+			S32G2_PE5_GMAC0_TXD1_OUT
+			S32G2_PE6_GMAC0_TXD2_OUT
+			S32G2_PE7_GMAC0_TXD3_OUT
+			S32G2_PE8_GMAC0_RXCLK_OUT
+			S32G2_PE8_GMAC0_RXCLK_IN
+			S32G2_PE9_GMAC0_RXDV_OUT
+			S32G2_PE9_GMAC0_RXDV_IN
+			S32G2_PE10_GMAC0_RXD0_OUT
+			S32G2_PE10_GMAC0_RXD0_IN
+			S32G2_PE11_GMAC0_RXD1_OUT
+			S32G2_PE11_GMAC0_RXD1_IN
+			S32G2_PE12_GMAC0_RXD2_OUT
+			S32G2_PE12_GMAC0_RXD2_IN
+			S32G2_PE13_GMAC0_RXD3_OUT
+			S32G2_PE13_GMAC0_RXD3_IN
+		>;
+	};
+};
+
+&gmac0_mdio {
+	/* KSZ9031RNX */
+	gmac0_mdio_c_phy4: phy@4 {
+		reg = <4>;
+	};
+};
+
+&gmac0 {
+	status = "okay";
+	phy-mode = "rgmii-id";
+	phy-handle = <&gmac0_mdio_c_phy4>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl0_gmac0_mdio_c>, <&pinctrl0_gmac0_rgmii_c>;
+};
