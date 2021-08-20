@@ -199,3 +199,10 @@ config PINCTRL_IMX23
 config PINCTRL_IMX28
 	bool
 	select PINCTRL_MXS
+
+config PINCTRL_S32G2
+	bool "Freescale S32G2 pinctrl driver"
+	depends on ARCH_S32
+	select PINCTRL_IMX
+	help
+	  Say Y here to enable the Freescale S32G2 pinctrl driver
