@@ -8,6 +8,7 @@
 
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/clock/s32g2-clock.h>
+#include <dt-bindings/pinctrl/pinctrl-s32g2.h>
 
 / {
 	compatible = "nxp,s32g2";
@@ -147,6 +148,24 @@
 			clock-names = "ipg", "ahb", "per";
 			no-1-8-v;
 			status = "disabled";
+		};
+
+		siul2 {
+			compatible = "simple-mfd";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			pinctrl0: pinctrl {
+				compatible = "nxp,s32g2-siul2-pinctrl0";
+				#pinctrl-cells = <2>;
+				reg = <0x4009c240 0x198>,
+	            		      <0x4009ca40 0x150>;
+					/* MSCR range */
+				pins = <&pinctrl0 0 101>,
+					/* IMCR range */
+					<&pinctrl0 512 595>;
+			};
 		};
 
 		gic: interrupt-controller@50800000 {
