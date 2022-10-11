@@ -65,6 +65,7 @@ properties:
         - ingenic,x2000-mac
         - loongson,ls2k-dwmac
         - loongson,ls7a-dwmac
+        - nxp,s32cc-dwmac
         - renesas,r9a06g032-gmac
         - renesas,rzn1-gmac
         - rockchip,px30-gmac
@@ -110,7 +111,7 @@ properties:
 
   clocks:
     minItems: 1
-    maxItems: 8
+    maxItems: 11
     additionalItems: true
     items:
       - description: GMAC main clock
@@ -122,7 +123,7 @@ properties:
 
   clock-names:
     minItems: 1
-    maxItems: 8
+    maxItems: 11
     additionalItems: true
     contains:
       enum:
