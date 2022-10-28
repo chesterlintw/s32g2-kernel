@@ -1,0 +1,91 @@
+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+# Copyright (c) 2022 NXP
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/pinctrl/nxp,s32cc-siul2-pinctrl.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: NXP S32 Common Chassis SIUL2 iomux controller
+
+maintainers:
+  - Ghennadi Procopciuc <Ghennadi.Procopciuc@nxp.com>
+  - Chester Lin <clin@suse.com>
+
+description: |
+  Core driver for the pin controller found on S32 Common Chassis SoC.
+
+properties:
+  compatible:
+    enum:
+      - nxp,s32g-siul2-pinctrl
+
+  reg:
+    minItems: 5
+    maxItems: 6
+    description: A list of register regions to be reserved.
+
+  nxp,pins:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+    description:
+      A list of [start, end] pin ID boundaries that correspond to each of
+      the register regions reserved.
+
+required:
+  - compatible
+  - reg
+  - nxp,pins
+
+patternProperties:
+  '_pins$':
+    type: object
+    patternProperties:
+      '_grp[0-9]$':
+        type: object
+        allOf:
+          - $ref: pinmux-node.yaml#
+          - $ref: pincfg-node.yaml#
+        description:
+          Pinctrl node's client devices specify pin muxes using subnodes,
+          which in turn use the standard properties below.
+
+additionalProperties: false
+
+examples:
+  - |
+
+    pinctrl: siul2-pinctrl@4009c240 {
+        compatible = "nxp,s32g-siul2-pinctrl";
+
+              /* MSCR range */
+        reg = <0x4009c240 0x198>,
+              <0x44010400 0x2c>,
+              <0x44010480 0xbc>,
+              /* MSCR range */
+              <0x4009ca40 0x150>,
+              <0x44010c1c 0x45c>,
+              <0x440110f8 0x108>;
+
+                   /* MSCR range */
+        nxp,pins = <0   101>,
+                   <112 122>,
+                   <144 190>,
+                   /* IMCR range */
+                   <512 595>,
+                   <631 909>,
+                   <942 1007>;
+
+        llce_can0_pins {
+            llce_can0_grp0 {
+                pinmux = <0x2b0>;
+                input-enable;
+                slew-rate = <0x00>;
+            };
+
+            llce_can0_grp1 {
+                pinmux = <0x2c2>;
+                output-enable;
+                slew-rate = <0x00>;
+            };
+        };
+    };
+...
