@@ -217,3 +217,19 @@ config PINCTRL_IMXRT1170
 	select PINCTRL_IMX
 	help
 	  Say Y here to enable the imxrt1170 pinctrl driver
+
+config PINCTRL_S32CC
+	bool "NXP S32 Common Chassis pinctrl driver core"
+	depends on ARCH_S32 && OF
+	select GENERIC_PINCTRL_GROUPS
+	select GENERIC_PINMUX_FUNCTIONS
+	select GENERIC_PINCONF
+	help
+	  Say Y here to enable the NXP S32CC pinctrl driver core
+
+config PINCTRL_S32G
+	depends on ARCH_S32 && OF
+	bool "NXP S32G pinctrl driver"
+	select PINCTRL_S32CC
+	help
+	  Say Y here to enable the pinctrl driver for NXP 32G family SoCs
